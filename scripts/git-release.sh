@@ -5,6 +5,6 @@ MINOR=0
 PATCH=$(date +%Y%m%d%H%M%S)
 VERSION="$MAJOR.$MINOR.$PATCH"
 TAG="v$VERSION"
-NOTES=${NOTES:-"AWS pod release $VERSION"}
+NOTES=${NOTES:-"Booster util release $VERSION"}
 git tag $TAG -m "$NOTES"
 git push origin $TAG
