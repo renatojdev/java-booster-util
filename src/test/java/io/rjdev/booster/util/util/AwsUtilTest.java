@@ -5,17 +5,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import io.rjdev.booster.util.Resource;
 import io.rjdev.booster.util.aws.AwsUtil;
 
 @Disabled("Disabled temporary")
 public class AwsUtilTest {
 
     AwsUtil awsu;
-    String bucket_name = "bucket_name";
+    static String bucket_name;
 
     @BeforeAll
     public static void start() {
         System.out.println("=======Starting junit 5 tests========");
+        Resource resource = Resource.getInstance();
+        bucket_name = resource.get("default_bucket_name");
     }
 
     @BeforeEach
@@ -23,15 +26,20 @@ public class AwsUtilTest {
         awsu = AwsUtil.builder().build().awsClient();
     }
 
-    @Test
+    // @Test
     public void listAllBucketsTest(){
         awsu.listAllBuckets();
     }
 
     @Test
-    public void listObjectsTest(){
-
+    public void listAllObjectsTest(){
         awsu.listAllObjects(bucket_name);
+
+    }
+
+    @Test
+    public void listObjectsTest(){
+        awsu.listObjects(bucket_name, "deployments");
 
     }
 

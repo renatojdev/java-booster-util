@@ -32,13 +32,6 @@ public class AwsUtil {
     }
 
     public AwsUtil awsClient(){
-        // ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create("s3_user");
-        // if(region==null)
-        //     region = Region.US_EAST_1;
-        // s3 = S3Client.builder()
-        //     .region(region)
-        //     .credentialsProvider(credentialsProvider)
-        //     .build();
         awsClientWithCredentials();
         return this;
     }
