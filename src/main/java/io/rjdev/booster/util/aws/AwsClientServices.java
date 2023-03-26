@@ -4,12 +4,13 @@ import io.rjdev.booster.util.Resource;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.regions.Region;
 
-public abstract class AwsClientServices<T> {
+public abstract class AwsClientServices<T,S> {
     private static final String ACCESS_KEY="access_key";
     private static final String SECRET_ACCESS_KEY="secret_access_key";
     protected Region region = Region.US_EAST_1;
 
     public abstract T buildClient(Region region);
+    public abstract S buildAsyncClient(Region region);
 
     protected AwsBasicCredentials credentials(){
         Resource resource = Resource.getInstance();
