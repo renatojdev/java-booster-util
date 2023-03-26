@@ -12,7 +12,7 @@ With maven can be easily integrated into other existing projects.
 
 1. Java 11
 2. Maven
-3. AWS SDK Java 2
+3. AWS SDK Java 2 - v2.20.20
 
 ## Getting Started
 
