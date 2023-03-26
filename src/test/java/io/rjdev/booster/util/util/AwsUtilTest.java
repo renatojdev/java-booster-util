@@ -1,5 +1,7 @@
 package io.rjdev.booster.util.util;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -39,7 +41,8 @@ public class AwsUtilTest {
 
     @Test
     public void listObjectsTest(){
-        awsu.listObjects(bucket_name, "deployments");
+        List<String> objects = awsu.listObjects(bucket_name, "deployments");
+        assert(objects.isEmpty());
 
     }
 

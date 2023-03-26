@@ -8,6 +8,8 @@ import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.model.S3Object;
+
+import java.util.ArrayList;
 import java.util.List;
 // snippet-end:[s3.java2.list_objects.import]
 import java.util.ListIterator;
@@ -75,7 +77,8 @@ public class ListObjects {
         return val/1024;
     }
 
-    public static void listObjects(S3Client s3, String bucketName, String folderName) {
+    public static List<String> listObjects(S3Client s3, String bucketName, String folderName) {
+        List<String> oStrings = new ArrayList<>();
         ListObjectsRequest req = ListObjectsRequest.builder()
             .bucket(bucketName)
             .prefix(folderName + "/")
@@ -88,8 +91,11 @@ public class ListObjects {
 
         while (listIterator.hasNext()) {
             S3Object object = listIterator.next();
+            oStrings.add(object.key());
             System.out.println(object.key() + " - " + object.size());
         }
+
+        return oStrings;
 
     }
 

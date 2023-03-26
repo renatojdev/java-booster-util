@@ -74,9 +74,9 @@ public class AwsUtil {
         ListObjects.listBucketObjects(s3, bucket_name);
     }
 
-    public void listObjects(String bucket_name, String folder_name) {
+    public List<String> listObjects(String bucket_name, String folder_name) {
 
-        ListObjects.listObjects(s3, bucket_name, folder_name);
+        return ListObjects.listObjects(s3, bucket_name, folder_name);
     }
 
     /**

@@ -25,7 +25,7 @@ With maven can be easily integrated into other existing projects.
 
 1. Git Clone
 ```sh
-git clone https://github.com/renatojdevel/java-booster-util.git
+git clone https://github.com/renatojdev/java-booster-util.git
 ```
 2. Install `~/.m2/repository`
 
