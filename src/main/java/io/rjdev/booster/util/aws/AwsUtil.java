@@ -21,11 +21,6 @@ public class AwsUtil {
 
     public AwsUtil awsClient(){
         s3 = S3FireClient.getInstance().buildClient(region);
-        // if(region != null){
-        //     S3ClientOne s3One = S3ClientOne.getInstance();
-        //     s3One.setRegion(region);
-        //     s3 = s3One.buildClient();
-        // } else s3 = S3ClientOne.getInstance().buildClient();
         return this;
     }
 

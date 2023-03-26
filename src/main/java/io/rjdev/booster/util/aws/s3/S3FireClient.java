@@ -1,6 +1,7 @@
 package io.rjdev.booster.util.aws.s3;
 
 import io.rjdev.booster.util.aws.AwsClientServices;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -24,10 +25,14 @@ public class S3FireClient extends AwsClientServices<S3Client,S3AsyncClient>{
         if(region != null)
             super.region = region;
 
+        AwsBasicCredentials creds = credentials();
         return S3Client.builder()
             .region(super.region)
-            .credentialsProvider(() -> credentials())
-            .build();
+            .credentialsProvider(
+                creds != null ?
+                () -> creds :
+                defaultProvider()
+            ).build();
     }
 
     @Override
@@ -35,9 +40,13 @@ public class S3FireClient extends AwsClientServices<S3Client,S3AsyncClient>{
         if(region != null)
             super.region = region;
 
+        AwsBasicCredentials creds = credentials();
         return S3AsyncClient.crtBuilder()
-            .credentialsProvider(() -> credentials())
-            .region(super.region)
+            .credentialsProvider(
+                creds != null ?
+                () -> creds :
+                defaultProvider()
+            ).region(super.region)
             .targetThroughputInGbps(20.0)
             .minimumPartSizeInBytes(8 * MB)
             .build();
