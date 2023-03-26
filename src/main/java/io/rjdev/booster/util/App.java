@@ -15,15 +15,15 @@ public class App {
         System.out.println( "Hello World!" );
         System.out.println(StringUtils.compare("Oi", "Oi"));
 
-        String bucket_name = "devel2";
+        String bucket_name = "bucket_name";
         AwsUtil awsu = AwsUtil.builder().build();
         awsu.awsClient();
 
         // awsu.listAllBuckets();
-        // awsu.uploadToS3("devel2", "file-test.txt", "src/main/resources/file-test.txt");
+        // awsu.uploadToS3("bucket_name", "file-test.txt", "src/main/resources/file-test.txt");
 
         awsu.listAllObjects(bucket_name);
-        // awsu.downloadFromS3("devel2", "file-test.txt", "src/main/resources/data/file-test-s3.txt");
+        // awsu.downloadFromS3("bucket_name", "file-test.txt", "src/main/resources/data/file-test-s3.txt");
 
         // awsu.deleteObjectS3(bucket_name, "file-test.txt");
 

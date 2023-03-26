@@ -51,7 +51,7 @@ import io.rjdev.booster.util.aws.AwsUtil;
 
 AwsUtil awsu = awsu = AwsUtil.builder().build().awsClient();
 
-String bucket_name = "devel2";
+String bucket_name = "bucket_name";
 // send the object - bucketName, objectKey, objectPath
 awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt");
 ```

@@ -11,7 +11,7 @@ import io.rjdev.booster.util.aws.AwsUtil;
 public class AwsUtilTest {
 
     AwsUtil awsu;
-    String bucket_name = "devel2";
+    String bucket_name = "bucket_name";
 
     @BeforeAll
     public static void start() {
