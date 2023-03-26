@@ -2,13 +2,12 @@ package io.rjdev.booster.util.aws;
 
 import java.util.List;
 
-import io.rjdev.booster.util.Resource;
 import io.rjdev.booster.util.aws.s3.DeleteObjects;
 import io.rjdev.booster.util.aws.s3.GetObjectData;
 import io.rjdev.booster.util.aws.s3.ListObjects;
 import io.rjdev.booster.util.aws.s3.PutObject;
+import io.rjdev.booster.util.aws.s3.S3ClientOne;
 import lombok.Builder;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.Bucket;
@@ -17,40 +16,16 @@ import software.amazon.awssdk.services.s3.model.Bucket;
 @Builder
 public class AwsUtil {
 
-    private static final String ACCESS_KEY="access_key";
-    private static final String SECRET_ACCESS_KEY="secret_access_key";
     private S3Client s3;
     Region region;
-    private String access_key;
-    private String secret_access_key;
-
-    public void loadKeys(){
-        Resource resource = Resource.getInstance();
-
-        access_key = resource.get(ACCESS_KEY);
-        secret_access_key = resource.get(SECRET_ACCESS_KEY);
-    }
 
     public AwsUtil awsClient(){
-        awsClientWithCredentials();
+        if(region != null){
+            S3ClientOne s3One = S3ClientOne.getInstance();
+            s3One.setRegion(region);
+            s3 = s3One.buildClient();
+        } else s3 = S3ClientOne.getInstance().buildClient();
         return this;
-    }
-
-    private void awsClientWithCredentials(){
-        loadKeys();
-        AwsBasicCredentials credentials =
-        AwsBasicCredentials.create(
-            access_key,
-            secret_access_key
-        );
-
-        if(region==null)
-            region = Region.US_EAST_1;
-
-        s3 = S3Client.builder()
-            .region(region)
-            .credentialsProvider(() -> credentials)
-            .build();
     }
 
     public void listAllBuckets(){

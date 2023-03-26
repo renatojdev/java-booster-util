@@ -42,7 +42,7 @@ public class AwsUtilTest {
     @Test
     public void listObjectsTest(){
         List<String> objects = awsu.listObjects(bucket_name, "deployments");
-        assert(objects.isEmpty());
+        assert(!objects.isEmpty());
 
     }
 
