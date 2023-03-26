@@ -58,6 +58,6 @@ awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt"
 
 ## License
 
-MIT
+Apache 2.0
 
 **Free Software!**
