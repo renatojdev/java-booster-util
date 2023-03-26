@@ -6,7 +6,7 @@ import io.rjdev.booster.util.aws.s3.DeleteObjects;
 import io.rjdev.booster.util.aws.s3.GetObjectData;
 import io.rjdev.booster.util.aws.s3.ListObjects;
 import io.rjdev.booster.util.aws.s3.PutObject;
-import io.rjdev.booster.util.aws.s3.S3ClientOne;
+import io.rjdev.booster.util.aws.s3.S3FireClient;
 import lombok.Builder;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -20,11 +20,12 @@ public class AwsUtil {
     Region region;
 
     public AwsUtil awsClient(){
-        if(region != null){
-            S3ClientOne s3One = S3ClientOne.getInstance();
-            s3One.setRegion(region);
-            s3 = s3One.buildClient();
-        } else s3 = S3ClientOne.getInstance().buildClient();
+        s3 = S3FireClient.getInstance().buildClient(region);
+        // if(region != null){
+        //     S3ClientOne s3One = S3ClientOne.getInstance();
+        //     s3One.setRegion(region);
+        //     s3 = s3One.buildClient();
+        // } else s3 = S3ClientOne.getInstance().buildClient();
         return this;
     }
 
