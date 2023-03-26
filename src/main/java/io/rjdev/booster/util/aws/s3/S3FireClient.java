@@ -27,7 +27,4 @@ public class S3FireClient extends AwsClientServices<S3Client>{
             .build();
     }
 
-
-
-
 }
