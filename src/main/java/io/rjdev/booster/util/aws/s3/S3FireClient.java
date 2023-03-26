@@ -32,6 +32,9 @@ public class S3FireClient extends AwsClientServices<S3Client,S3AsyncClient>{
 
     @Override
     public S3AsyncClient buildAsyncClient(Region region) {
+        if(region != null)
+            super.region = region;
+
         return S3AsyncClient.crtBuilder()
             .credentialsProvider(() -> credentials())
             .region(super.region)
