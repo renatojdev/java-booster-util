@@ -10,6 +10,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.model.S3Object;
 import java.util.List;
 // snippet-end:[s3.java2.list_objects.import]
+import java.util.ListIterator;
 
 /**
  * Before running this Java V2 code example, set up your development environment, including your credentials.
@@ -73,5 +74,24 @@ public class ListObjects {
     private static long calKb(Long val) {
         return val/1024;
     }
+
+    public static void listObjects(S3Client s3, String bucketName, String folderName) {
+        ListObjectsRequest req = ListObjectsRequest.builder()
+            .bucket(bucketName)
+            .prefix(folderName + "/")
+            .build();
+
+        ListObjectsResponse response = s3.listObjects(req);
+        List<S3Object> objects = response.contents();
+
+        ListIterator<S3Object> listIterator = objects.listIterator();
+
+        while (listIterator.hasNext()) {
+            S3Object object = listIterator.next();
+            System.out.println(object.key() + " - " + object.size());
+        }
+
+    }
+
    // snippet-end:[s3.java2.list_objects.main]
 }

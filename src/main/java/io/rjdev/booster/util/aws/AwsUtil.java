@@ -1,10 +1,8 @@
 package io.rjdev.booster.util.aws;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
 
+import io.rjdev.booster.util.Resource;
 import io.rjdev.booster.util.aws.s3.DeleteObjects;
 import io.rjdev.booster.util.aws.s3.GetObjectData;
 import io.rjdev.booster.util.aws.s3.ListObjects;
@@ -26,18 +24,11 @@ public class AwsUtil {
     private String access_key;
     private String secret_access_key;
 
-    public void loadResource(){
-        Properties prop = new Properties();
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = loader.getResourceAsStream("env.properties");
+    public void loadKeys(){
+        Resource resource = Resource.getInstance();
 
-        try {
-            prop.load(stream);
-            access_key = prop.getProperty(ACCESS_KEY);
-            secret_access_key = prop.getProperty(SECRET_ACCESS_KEY);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
+        access_key = resource.get(ACCESS_KEY);
+        secret_access_key = resource.get(SECRET_ACCESS_KEY);
     }
 
     public AwsUtil awsClient(){
@@ -53,7 +44,7 @@ public class AwsUtil {
     }
 
     private void awsClientWithCredentials(){
-        loadResource();
+        loadKeys();
         AwsBasicCredentials credentials =
         AwsBasicCredentials.create(
             access_key,
@@ -88,6 +79,11 @@ public class AwsUtil {
     public void listAllObjects(String bucket_name) {
 
         ListObjects.listBucketObjects(s3, bucket_name);
+    }
+
+    public void listObjects(String bucket_name, String folder_name) {
+
+        ListObjects.listObjects(s3, bucket_name, folder_name);
     }
 
     /**
