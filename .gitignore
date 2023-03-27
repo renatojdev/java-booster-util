@@ -20,6 +20,7 @@
 *.tar.gz
 *.rar
 
+.DS_Store
 .vscode
 **/*.properties
 
