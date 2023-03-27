@@ -37,7 +37,7 @@ public class ZipUtil {
 	public static void unzip(FileInputStream zipFile, File destDir) throws ZipException, IOException{
     	try {
     		if(!destDir.exists())
-				destDir.mkdir();
+			  destDir.mkdir();
 
 	    	ZipInputStream zis = new ZipInputStream(new BufferedInputStream(zipFile));
 	    	ZipEntry entry;
