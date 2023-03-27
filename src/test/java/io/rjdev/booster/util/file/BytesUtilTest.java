@@ -1,9 +1,6 @@
 package io.rjdev.booster.util.file;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeAll;
