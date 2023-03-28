@@ -46,16 +46,16 @@ public class AwsUtil {
         }
     }
 
-    public void uploadToS3(String bucket_name, String objectKey, String filePath){
+    public String uploadToS3(String bucket_name, String objectKey, String filePath){
         bucket_name = getBucketName(bucket_name);
         if(bucket_name == null ||
             !StringUtil.isNotBlank(objectKey) ||
             !StringUtil.isNotBlank(filePath))
-            return;
+            return null;
 
-        String res = PutObject.putS3Object(s3, bucket_name, objectKey, filePath);
-        System.out.println(res);
-        System.out.println("File uploaded successfully.");
+        String eTag = PutObject.putS3Object(s3, bucket_name, objectKey, filePath);
+        System.out.println("Etag "+eTag+": File uploaded successfully.");
+        return eTag;
     }
 
 
@@ -83,14 +83,14 @@ public class AwsUtil {
      * @param keyName The key name.
      * @param path The path where the file is written to.
      */
-    public void downloadFromS3(String bucket_name, String keyName, String path){
+    public boolean downloadFromS3(String bucket_name, String keyName, String path){
         bucket_name = getBucketName(bucket_name);
         if(bucket_name == null ||
             !StringUtil.isNotBlank(keyName) ||
             !StringUtil.isNotBlank(path))
-            return;
+            return false;
 
-        GetObjectData.getObjectBytes(s3, bucket_name, keyName, path);
+        return GetObjectData.getObjectBytes(s3, bucket_name, keyName, path);
 
     }
 
