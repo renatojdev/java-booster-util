@@ -8,6 +8,7 @@ import io.rjdev.booster.util.aws.s3.GetObjectData;
 import io.rjdev.booster.util.aws.s3.ListObjects;
 import io.rjdev.booster.util.aws.s3.PutObject;
 import io.rjdev.booster.util.aws.s3.S3FireClient;
+import io.rjdev.booster.util.string.StringUtil;
 import lombok.Builder;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -30,8 +31,8 @@ public class AwsUtil {
     }
 
     private String getBucketName(String bucketName){
-        if(bucketName == null || bucketName.isEmpty()){
-            if(defaultBucketName != null && !defaultBucketName.isEmpty())
+        if(!StringUtil.isNotBlank(bucketName)){
+            if(StringUtil.isNotBlank(defaultBucketName))
                 return defaultBucketName;
         }
         return bucketName;
@@ -48,8 +49,8 @@ public class AwsUtil {
     public void uploadToS3(String bucket_name, String objectKey, String filePath){
         bucket_name = getBucketName(bucket_name);
         if(bucket_name == null ||
-            (objectKey == null || objectKey.isEmpty()) ||
-            (filePath == null || filePath.isEmpty()))
+            !StringUtil.isNotBlank(objectKey) ||
+            !StringUtil.isNotBlank(filePath))
             return;
 
         String res = PutObject.putS3Object(s3, bucket_name, objectKey, filePath);
@@ -69,7 +70,7 @@ public class AwsUtil {
     public List<String> listObjects(String bucket_name, String folder_name) {
         bucket_name = getBucketName(bucket_name);
         if(bucket_name == null ||
-            (folder_name == null || folder_name.isEmpty()))
+            !StringUtil.isNotBlank(folder_name))
             return null;
 
         return ListObjects.listObjects(s3, bucket_name, folder_name);
@@ -85,8 +86,8 @@ public class AwsUtil {
     public void downloadFromS3(String bucket_name, String keyName, String path){
         bucket_name = getBucketName(bucket_name);
         if(bucket_name == null ||
-            (keyName == null || keyName.isEmpty()) ||
-            (path == null || path.isEmpty()))
+            !StringUtil.isNotBlank(keyName) ||
+            !StringUtil.isNotBlank(path))
             return;
 
         GetObjectData.getObjectBytes(s3, bucket_name, keyName, path);
@@ -101,7 +102,7 @@ public class AwsUtil {
      */
     public void deleteObjectS3(String bucket_name, String objectName) {
         bucket_name = getBucketName(bucket_name);
-        if(bucket_name == null || objectName == null || objectName.isEmpty())
+        if(bucket_name == null || !StringUtil.isNotBlank(objectName))
             return;
 
         System.out.println("Deleting "+objectName +" from the Amazon S3 bucket: " + bucket_name);

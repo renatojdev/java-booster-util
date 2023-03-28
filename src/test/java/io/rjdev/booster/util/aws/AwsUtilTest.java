@@ -48,13 +48,13 @@ public class AwsUtilTest {
         assert(objects == null);
     }
 
-    // @Test
+    @Test
     public void putObjectS3Test(){
         awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt");
         awsu.uploadToS3(null, "file-test.txt", "src/main/resources/file-test.txt");
     }
 
-    // @Test
+    @Test
     public void downloadFromS3Test(){
         awsu.downloadFromS3(bucket_name, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
         awsu.downloadFromS3(null, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
