@@ -99,7 +99,7 @@ public class PutObject {
             System.exit(1);
         }
 
-        return "";
+        return null;
     }
 
     // Return a byte array.
