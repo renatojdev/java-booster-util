@@ -46,15 +46,27 @@ mvn clean install
 
 ## Examples code
 
-# Upload object to S3
+# Amazon S3
+
+>Set credentials on file **env.properties** Eg:
+>access_key=IAM ACCESS KEY
+>secret_access_key=IAM SECRET ACCESS KEY
+>default_bucket_name=DEFAULT S3 BUCKET NAME
+
 ```java
 import io.rjdev.booster.util.aws.AwsUtil;
 
 AwsUtil awsu = awsu = AwsUtil.builder().build().awsClient();
-
 String bucket_name = "bucket_name";
+
 // send the object - bucketName, objectKey, objectPath
 awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt");
+
+// get from S3 - bucket_name, keyName, path The path where the file is written to.
+awsu.downloadFromS3(bucket_name, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
+
+// delete object
+awsu.deleteObjectS3(bucket_name, "file-test.txt");
 ```
 
 # File - Saving bytes
