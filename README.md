@@ -67,7 +67,7 @@ AwsUtil awsu = AwsUtil.builder()
 
 or
 
-AwsUtil awsu = awsu = AwsUtil.builder().build().awsClient();// get from props file
+AwsUtil awsu = AwsUtil.builder().build().awsClient();// get from props file
 
 String bucket_name = "bucket_name";
 
