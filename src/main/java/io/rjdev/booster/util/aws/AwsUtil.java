@@ -17,21 +17,40 @@ import software.amazon.awssdk.services.s3.model.Bucket;
 
 @Builder
 public class AwsUtil {
-
     private String defaultBucketName;
     private S3Client s3;
     Region region;
 
+    /**
+     * Default Constructor. Set the s3 client.
+     *
+     * @return AwsUtil instance.
+     */
     public AwsUtil awsClient(){
-        Resource resource = Resource.getInstance();
-        defaultBucketName = resource.get("default_bucket_name");
-
+        getDefaults();
         s3 = S3FireClient.getInstance().buildClient(region);
         return this;
     }
 
+    /**
+     * Constructor with credentials.
+     *
+     * @return AwsUtil instance
+     */
+    public AwsUtil awsClient(String access_key, String secret_access_key){
+        S3FireClient.getInstance().credentials(access_key, secret_access_key);
+        return awsClient();
+    }
+
+    /**
+     * Close the s3 client connections.
+     */
     public void closeS3Client(){
         s3.close();
+    }
+
+    private void getDefaults(){
+        defaultBucketName = Resource.getInstance().get("default_bucket_name");
     }
 
     private String getBucketName(String bucketName){

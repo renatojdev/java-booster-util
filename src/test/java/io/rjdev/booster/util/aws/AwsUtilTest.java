@@ -11,23 +11,31 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.rjdev.booster.util.Resource;
+import software.amazon.awssdk.regions.Region;
 
 @Disabled("Disabled temporary")
 public class AwsUtilTest {
 
     AwsUtil awsu;
     static String bucket_name;
+    static String access_key;
+    static String secret_access_key;
 
     @BeforeAll
     public static void start() {
         System.out.println("=======Starting junit 5 tests========");
         Resource resource = Resource.getInstance();
+        access_key = resource.get("access_key");
+        secret_access_key = resource.get("secret_access_key");
         bucket_name = resource.get("default_bucket_name");
     }
 
     @BeforeEach
     public void setup(){
-        awsu = AwsUtil.builder().build().awsClient();
+        awsu = AwsUtil.builder()
+            .region(Region.US_EAST_1)
+            .build()
+            .awsClient(access_key, secret_access_key);
     }
 
     @AfterEach
