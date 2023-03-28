@@ -2,6 +2,7 @@ package io.rjdev.booster.util.aws;
 
 import java.util.List;
 
+import io.rjdev.booster.util.Resource;
 import io.rjdev.booster.util.aws.s3.DeleteObjects;
 import io.rjdev.booster.util.aws.s3.GetObjectData;
 import io.rjdev.booster.util.aws.s3.ListObjects;
@@ -16,12 +17,24 @@ import software.amazon.awssdk.services.s3.model.Bucket;
 @Builder
 public class AwsUtil {
 
+    private String defaultBucketName;
     private S3Client s3;
     Region region;
 
     public AwsUtil awsClient(){
+        Resource resource = Resource.getInstance();
+        defaultBucketName = resource.get("default_bucket_name");
+
         s3 = S3FireClient.getInstance().buildClient(region);
         return this;
+    }
+
+    private String getBucketName(String bucketName){
+        if(bucketName == null || bucketName.isEmpty()){
+            if(defaultBucketName != null && !defaultBucketName.isEmpty())
+                return defaultBucketName;
+        }
+        return bucketName;
     }
 
     public void listAllBuckets(){
@@ -33,6 +46,11 @@ public class AwsUtil {
     }
 
     public void uploadToS3(String bucket_name, String objectKey, String filePath){
+        bucket_name = getBucketName(bucket_name);
+        if(bucket_name == null ||
+            (objectKey == null || objectKey.isEmpty()) ||
+            (filePath == null || filePath.isEmpty()))
+            return;
 
         String res = PutObject.putS3Object(s3, bucket_name, objectKey, filePath);
         System.out.println(res);
@@ -41,11 +59,18 @@ public class AwsUtil {
 
 
     public void listAllObjects(String bucket_name) {
+        bucket_name = getBucketName(bucket_name);
+        if(bucket_name == null)
+            return;
 
         ListObjects.listBucketObjects(s3, bucket_name);
     }
 
     public List<String> listObjects(String bucket_name, String folder_name) {
+        bucket_name = getBucketName(bucket_name);
+        if(bucket_name == null ||
+            (folder_name == null || folder_name.isEmpty()))
+            return null;
 
         return ListObjects.listObjects(s3, bucket_name, folder_name);
     }
@@ -58,6 +83,11 @@ public class AwsUtil {
      * @param path The path where the file is written to.
      */
     public void downloadFromS3(String bucket_name, String keyName, String path){
+        bucket_name = getBucketName(bucket_name);
+        if(bucket_name == null ||
+            (keyName == null || keyName.isEmpty()) ||
+            (path == null || path.isEmpty()))
+            return;
 
         GetObjectData.getObjectBytes(s3, bucket_name, keyName, path);
 
@@ -70,6 +100,9 @@ public class AwsUtil {
      * @param objectName The object name.
      */
     public void deleteObjectS3(String bucket_name, String objectName) {
+        bucket_name = getBucketName(bucket_name);
+        if(bucket_name == null || objectName == null || objectName.isEmpty())
+            return;
 
         System.out.println("Deleting "+objectName +" from the Amazon S3 bucket: " + bucket_name);
         DeleteObjects.deleteBucketObjects(s3, bucket_name, objectName);
