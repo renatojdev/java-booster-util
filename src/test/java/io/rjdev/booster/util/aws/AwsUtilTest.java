@@ -42,23 +42,28 @@ public class AwsUtilTest {
     public void listObjectsTest(){
         List<String> objects = awsu.listObjects(bucket_name, "deployments");
         assert(!objects.isEmpty());
-
+        objects = awsu.listObjects(null, "deployments");
+        assert(!objects.isEmpty());
+        objects = awsu.listObjects(null, null);
+        assert(objects == null);
     }
 
     // @Test
     public void putObjectS3Test(){
         awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt");
-
+        awsu.uploadToS3(null, "file-test.txt", "src/main/resources/file-test.txt");
     }
 
     // @Test
     public void downloadFromS3Test(){
         awsu.downloadFromS3(bucket_name, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
+        awsu.downloadFromS3(null, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
     }
 
 
     public void deleteObjectS3Test(){
         awsu.deleteObjectS3(bucket_name, "file-test.txt");
+        awsu.deleteObjectS3(null, "file-test.txt");
     }
 }
 
