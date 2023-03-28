@@ -1,7 +1,5 @@
 package io.rjdev.booster.util.string;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class StringUtil {
 
     public static String removeCharFromString(char c, String str) {
