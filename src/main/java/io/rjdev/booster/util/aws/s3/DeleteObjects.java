@@ -60,7 +60,7 @@ public class DeleteObjects {
     }
 
     // snippet-start:[s3.java2.delete_objects.main]
-    public static void deleteBucketObjects(S3Client s3, String bucketName, String objectName) {
+    public static boolean deleteBucketObjects(S3Client s3, String bucketName, String objectName) {
 
         ArrayList<ObjectIdentifier> toDelete = new ArrayList<>();
         toDelete.add(ObjectIdentifier.builder()
@@ -78,10 +78,11 @@ public class DeleteObjects {
 
         } catch (S3Exception e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            System.exit(1);
+            return false;
         }
 
         System.out.println("Done!");
+        return true;
     }
     // snippet-end:[s3.java2.delete_objects.main]
 }
