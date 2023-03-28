@@ -11,9 +11,13 @@ public class BytesUtil {
       * @param theBytes the bytes to write to the file
       * @throws java.io.IOException reports problems saving the file;
       */
-    public static void saveBytesToFile( String fileName, byte[] theBytes )
-        throws java.io.IOException {
-      saveBytesToStream( new java.io.FileOutputStream( fileName ), theBytes );
+    public static boolean saveBytesToFile( String fileName, byte[] theBytes ){
+      try{
+        saveBytesToStream( new java.io.FileOutputStream( fileName ), theBytes );
+        return true;
+      }catch(java.io.IOException e){
+        return false;
+      }
     }
 
     /**
