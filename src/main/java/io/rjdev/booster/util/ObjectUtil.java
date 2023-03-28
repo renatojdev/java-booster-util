@@ -16,19 +16,19 @@ import java.io.Serializable;
 public class ObjectUtil implements Serializable {
 
 	/**
-	 * Metodo para testar a equalidade de dois objetos. Primeiro e verificado se
-	 * um dos dois objetos forem nulos, retorna FALSE, mas se os dois forem
-	 * nulos, retorna TRUE. Em seguida e verificacado se os objetos sao iguais.
+	 * Method for testing the equality of two objects. First and check if
+	 * one of the two objects is null, returns FALSE, but if both are
+	 * null, returns TRUE. Then it is checked if the objects are equal.
 	 *
 	 * @param obj1
-	 *            primeiro objeto para verificacao de equaldiade
+	 * first object for equality check
 	 * @param obj2
-	 *            segundo objeto para verificacao de equalidade
-	 * @return TRUE se os objetos forem iguais ou FALSE em caso contrario.
+	 * second object for equality check
+	 * @return TRUE if the objects are equal or FALSE otherwise.
 	 * @since 08/02/2008
 	 * @since 0.0.5
 	 */
-	public static boolean isEqual(Object obj1, Object obj2){
+	public static boolean isEquals(Object obj1, Object obj2){
 
 		if (obj1 == null ^ obj2 == null) {
 			return false;
@@ -42,19 +42,19 @@ public class ObjectUtil implements Serializable {
 	}
 
 	/**
-	 * Metodo para testar a diferanca de dois objetos. Primeiro e verificado se
-	 * um dos dois objetos forem nulos, retorna TRUE, mas se os dois forem
-	 * nulos, retorna FALSE. Em seguida e verificacado se os objetos sao diferentes.
+	 * Method for testing the difference of two objects. First and check if
+ 	 * one of the two objects is null, returns TRUE, but if both are
+	 * null, returns FALSE. Then it is checked if the objects are different.
 	 *
 	 *
 	 * @author Ronaldo Campos de Oliveira
-	 * @since 21/08/2008
-	 * @param obj1 primeiro objeto para verificacao de diferenca
-	 * @param obj2 segundo objeto para verificacao de diferanca
-	 * @return true se os objetos forem diferentes
+	 * @since 8/21/2008
+	 * @param obj1 first object for diff checking
+	 * @param obj2 second object for difference checking
+	 * @return true if the objects are different
 	 */
 	public static boolean notEqual(Object obj1, Object obj2){
-		return !ObjectUtil.isEqual(obj1, obj2);
+		return !ObjectUtil.isEquals(obj1, obj2);
 	}
 
 }
