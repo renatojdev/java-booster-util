@@ -44,8 +44,9 @@ mvn clean install
 ```
 
 
-## Example code
+## Examples code
 
+# Upload object to S3
 ```java
 import io.rjdev.booster.util.aws.AwsUtil;
 
@@ -54,6 +55,49 @@ AwsUtil awsu = awsu = AwsUtil.builder().build().awsClient();
 String bucket_name = "bucket_name";
 // send the object - bucketName, objectKey, objectPath
 awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt");
+```
+
+# File - Saving bytes
+
+```java
+import io.rjdev.booster.util.file.BytesUtil;
+
+String fname = "src/main/resources/data/f1.txt";//file path
+boolean saved = BytesUtil.saveBytesToFile(fname, "Hello!".getBytes());
+```
+
+# Image - Saving image and thumbnail
+
+```java
+//get and save JPG image
+BufferedImage bufImage = ImageIO.read(new URL("https://httpcats.com/200.jpg"));
+ImgUtil.writeImage(bufImage, "jpg", new File("src/main/resources/200.jpg");
+
+//thumb
+BufferedImage bufThumb = ImgUtil.generateThumbnail(bufImage, null, null, "jpg");
+ImgUtil.writeImage(bufThumb, "jpg", new File("src/main/resources/200t.jpg"));
+```
+
+# String tokenizer
+
+```java
+import io.rjdev.booster.util.string.Token;
+
+String[] array = Token.separate("Hello, world!", ",");
+
+System.out.println(array[0]);
+Output: Hello`
+System.out.println(array[1]);
+Output: world!`
+```
+
+# Hash SHA 256 / 512
+
+```java
+import io.rjdev.booster.util.string.SHAString;
+import io.rjdev.booster.util.string.SHAString.Type;
+
+String sHash256 = SHAString.hash("string to be converted in sha 256", Type.SHA_256);
 ```
 
 ## License
