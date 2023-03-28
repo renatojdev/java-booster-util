@@ -49,9 +49,13 @@ mvn clean install
 # Amazon S3
 
 >Set credentials on file **env.properties** Eg:
->access_key=IAM ACCESS KEY
->secret_access_key=IAM SECRET ACCESS KEY
->default_bucket_name=DEFAULT S3 BUCKET NAME
+```
+access_key=IAM ACCESS KEY
+secret_access_key=IAM SECRET ACCESS KEY
+default_bucket_name=DEFAULT S3 BUCKET NAME
+```
+
+---
 
 ```java
 import io.rjdev.booster.util.aws.AwsUtil;
