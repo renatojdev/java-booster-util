@@ -1,5 +1,7 @@
 package io.rjdev.booster.util.aws;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -50,14 +52,15 @@ public class AwsUtilTest {
 
     @Test
     public void putObjectS3Test(){
-        awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt");
-        awsu.uploadToS3(null, "file-test.txt", "src/main/resources/file-test.txt");
+        assert(awsu.uploadToS3(bucket_name, "file-test.txt", "src/main/resources/file-test.txt") != null);
+        assert(awsu.uploadToS3(null, "file-test.txt", "src/main/resources/file-test.txt") != null);
     }
 
     @Test
     public void downloadFromS3Test(){
-        awsu.downloadFromS3(bucket_name, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
-        awsu.downloadFromS3(null, "file-test.txt", "src/main/resources/data/file-test-s3.txt");
+        assert(awsu.downloadFromS3(bucket_name, "file-test.txt", "src/main/resources/data/file-test-s3.txt"));
+        assert(awsu.downloadFromS3(null, "file-test.txt", "src/main/resources/data/file-test-s3.txt"));
+        assertFalse(awsu.downloadFromS3(null, "file-test.txt", "src/main/resources/data2/file-test-s3.txt"));
     }
 
 
