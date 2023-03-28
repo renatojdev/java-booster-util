@@ -1,4 +1,4 @@
-package io.rjdev.booster.util.util;
+package io.rjdev.booster.util.aws;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.rjdev.booster.util.Resource;
-import io.rjdev.booster.util.aws.AwsUtil;
 
 @Disabled("Disabled temporary")
 public class AwsUtilTest {
