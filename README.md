@@ -74,7 +74,7 @@ BufferedImage bufImage = ImageIO.read(new URL("https://httpcats.com/200.jpg"));
 ImgUtil.writeImage(bufImage, "jpg", new File("src/main/resources/200.jpg");
 
 //thumb
-BufferedImage bufThumb = ImgUtil.generateThumbnail(bufImage, null, null, "jpg");
+BufferedImage bufThumb = ImgUtil.generateThumbnail(bufImage, 144, 144, "jpg");
 ImgUtil.writeImage(bufThumb, "jpg", new File("src/main/resources/200t.jpg"));
 ```
 
