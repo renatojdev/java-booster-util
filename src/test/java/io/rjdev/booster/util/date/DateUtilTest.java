@@ -1,6 +1,8 @@
 package io.rjdev.booster.util.date;
 
 import org.joda.time.LocalDate;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,10 +34,19 @@ public class DateUtilTest {
 
     @Test
     public void test_getDateFormat(){
-        assert("27/03".equals(DateUtil.getStringDateFormat(new Date(), "dd/MM")));
-        assert("27/03/23".equals(DateUtil.getStringDateFormat(new Date(), "dd/MM/yy")));
-        assert("2023-03-27".equals(DateUtil.getStringDateFormat(new Date(), "yyyy-MM-dd")));
-        assert("27/03/2023".equals(DateUtil.getStringDateFormat(null, null)));
+        String patternTinyBr = "dd/MM";
+        String patternShortBr = "dd/MM/yy";
+        String pattern = "yyyy-MM-dd";
+        String patternBr = "dd/MM/yyyy";
+        Date today = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(patternTinyBr);
+        assert(sdf.format(today).equals(DateUtil.getStringDateFormat(new Date(), patternTinyBr)));
+        sdf.applyPattern(patternShortBr);
+        assert(sdf.format(today).equals(DateUtil.getStringDateFormat(new Date(), patternShortBr)));
+        sdf.applyPattern(pattern);
+        assert(sdf.format(today).equals(DateUtil.getStringDateFormat(new Date(), pattern)));
+        sdf.applyPattern(patternBr);
+        assert(sdf.format(today).equals(DateUtil.getStringDateFormat(null, patternBr)));
     }
 
     @Test
