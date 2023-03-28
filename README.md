@@ -48,7 +48,7 @@ mvn clean install
 
 # AWS SDK
 
->Set aws s3 credentials on file **env.properties** Eg:
+>Set aws s3 credentials on props file **env.properties** Eg:
 ```
 access_key=IAM ACCESS KEY
 secret_access_key=IAM SECRET ACCESS KEY
@@ -61,7 +61,12 @@ default_bucket_name=DEFAULT S3 BUCKET NAME
 ```java
 import io.rjdev.booster.util.aws.AwsUtil;
 
-AwsUtil awsu = awsu = AwsUtil.builder().build().awsClient();
+AwsUtil awsu = AwsUtil.builder().region(Region.US_EAST_1).build().awsClient("access_key", "secret_access_key"); // instance with credentials keys
+
+or
+
+AwsUtil awsu = awsu = AwsUtil.builder().build().awsClient();// get from props file
+
 String bucket_name = "bucket_name";
 
 // send the object - bucketName, objectKey, objectPath
