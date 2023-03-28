@@ -61,7 +61,9 @@ default_bucket_name=DEFAULT S3 BUCKET NAME
 ```java
 import io.rjdev.booster.util.aws.AwsUtil;
 
-AwsUtil awsu = AwsUtil.builder().region(Region.US_EAST_1).build().awsClient("access_key", "secret_access_key"); // instance with credentials keys
+AwsUtil awsu = AwsUtil.builder()
+  .region(Region.US_EAST_1).build()
+  .awsClient("access_key", "secret_access_key"); // instance with credentials keys
 
 or
 
