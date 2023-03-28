@@ -3,8 +3,8 @@ package io.rjdev.booster.util.string;
 import java.util.StringTokenizer;
 
 /**
- * Classe com metodos uteis trabalhando com tokens
- * de String
+ * Class with useful methods working with tokens
+ * String
  *
  * @author Ronaldo Campos de Oliveira
  * @author $Author: ec2-user $
@@ -16,27 +16,27 @@ import java.util.StringTokenizer;
 public class Token {
 
 	/**
-	 * Metodo que separa uma string por um separador e retorna
-	 * cada string separada em um array.
+	 * Method that separates a string by a separator and returns
+	 * each separate string in an array.
 	 *
 	 * @author Ronaldo Campos de Oliveira
 	 * @since 24/10/2007
-	 * @param expressao String a ser separada
-	 * @param separador String identificador onde sera quebrada a string
-	 * @return String[] com as strings geradas ap�s a quebra
+	 * @param String expression to be separated
+	 * @param String tab where the string will be broken
+	 * @return String[] with the strings generated after the break
 	 * @see StringTokenizer
 	 */
 	public static String[] separate(String expressao, String separador){
-		// Separa a string passada pelo separador informado
+		// Separates the string passed by the entered separator
 		StringTokenizer st = new StringTokenizer(expressao, separador);
-		// Cria o array de retorno com o tamanho igual ao numero de tokens gerados
+		// Creates the return array with the size equal to the number of generated tokens
 		String[] tokens = new String[st.countTokens()];
 		int i = 0;
 		while(st.hasMoreTokens()){
 			tokens[i] = st.nextToken();
 			i++;
 		}
-		// Retorna o array com as strings separadas
+		// Returns the array with the separate strings
 		return tokens;
 	}
 }
