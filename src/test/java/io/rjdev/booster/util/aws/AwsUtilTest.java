@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -27,6 +28,11 @@ public class AwsUtilTest {
     @BeforeEach
     public void setup(){
         awsu = AwsUtil.builder().build().awsClient();
+    }
+
+    @AfterEach
+    public void release(){
+        awsu.closeS3Client();
     }
 
     // @Test
@@ -65,8 +71,8 @@ public class AwsUtilTest {
 
 
     public void deleteObjectS3Test(){
-        awsu.deleteObjectS3(bucket_name, "file-test.txt");
-        awsu.deleteObjectS3(null, "file-test.txt");
+        assert(awsu.deleteObjectS3(bucket_name, "file-test.txt"));
+        assertFalse(awsu.deleteObjectS3(null, "file-test.txt"));
     }
 }
 
