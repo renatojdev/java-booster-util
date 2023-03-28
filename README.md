@@ -46,7 +46,7 @@ mvn clean install
 
 ## Examples code
 
-# Amazon S3
+# AWS SDK
 
 >Set credentials on file **env.properties** Eg:
 ```
@@ -56,6 +56,8 @@ default_bucket_name=DEFAULT S3 BUCKET NAME
 ```
 
 ---
+
+# S3
 
 ```java
 import io.rjdev.booster.util.aws.AwsUtil;
