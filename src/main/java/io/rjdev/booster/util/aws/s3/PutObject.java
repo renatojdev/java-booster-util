@@ -84,7 +84,7 @@ public class PutObject {
 
         try {
             Map<String, String> metadata = new HashMap<>();
-            metadata.put("x-amz-meta-myVal", "test");
+            metadata.put("x-amz-meta-origin", "booster-util");
             PutObjectRequest putOb = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(objectKey)
