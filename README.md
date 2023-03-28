@@ -38,7 +38,7 @@ mvn clean install
 ```
 <dependency>
   <groupId>io.rjdev.booster</groupId>
-  <artifactId>util</artifactId>
+  <artifactId>booster-util</artifactId>
   <version>0.0.1</version>
 </dependency>
 ```
