@@ -30,6 +30,10 @@ public class AwsUtil {
         return this;
     }
 
+    public void closeS3Client(){
+        s3.close();
+    }
+
     private String getBucketName(String bucketName){
         if(!StringUtil.isNotBlank(bucketName)){
             if(StringUtil.isNotBlank(defaultBucketName))
@@ -100,13 +104,13 @@ public class AwsUtil {
      * @param bucket_name The Amazon S3 bucket to delete the website configuration from.
      * @param objectName The object name.
      */
-    public void deleteObjectS3(String bucket_name, String objectName) {
+    public boolean deleteObjectS3(String bucket_name, String objectName) {
         bucket_name = getBucketName(bucket_name);
         if(bucket_name == null || !StringUtil.isNotBlank(objectName))
-            return;
+            return false;
 
         System.out.println("Deleting "+objectName +" from the Amazon S3 bucket: " + bucket_name);
-        DeleteObjects.deleteBucketObjects(s3, bucket_name, objectName);
+        return DeleteObjects.deleteBucketObjects(s3, bucket_name, objectName);
     }
 
 }
