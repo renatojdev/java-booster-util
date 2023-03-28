@@ -20,7 +20,9 @@ public class ImgUtilTest {
         try{
             url = new URL("https://httpcats.com/200.jpg");
             bufImage = ImageIO.read(url);
-        }catch(IOException e){}
+        }catch(IOException e){
+            System.err.println(e.getMessage());
+        }
     }
 
     @Test
