@@ -52,4 +52,10 @@ public class S3FireClient extends AwsClientServices<S3Client,S3AsyncClient>{
             .build();
     }
 
+
+    public void credentials(String access_key, String secret_access_key){
+        super.access_key = access_key;
+        super.secret_access_key = secret_access_key;
+    }
+
 }
