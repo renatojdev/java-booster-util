@@ -1,5 +1,7 @@
 package io.rjdev.booster.util.string;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class StringUtil {
 
     public static String removeCharFromString(char c, String str) {
@@ -240,5 +242,19 @@ public class StringUtil {
 		return r;
 	}
 
+	/**
+	 * Verify if Charsequence is no blank.
+	 *
+	 * @param string
+	 * @return
+	 */
+	public static boolean isNotBlank(CharSequence charSequence){
+		if(charSequence == null || charSequence.toString().isEmpty())
+			return false;
+		if(charSequence.toString().trim().isEmpty())
+			return false;
+
+		return true;
+	}
 
 }

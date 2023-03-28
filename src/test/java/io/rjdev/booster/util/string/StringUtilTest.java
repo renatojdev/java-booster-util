@@ -117,5 +117,14 @@ public class StringUtilTest{
         assert( null == StringUtil.removeChar(null, 'c'));
     }
 
+    @Test
+    public void testInNotBlank(){
+        assert(!StringUtil.isNotBlank(null)); // false
+        assert(!StringUtil.isNotBlank("")); // false
+        assert(!StringUtil.isNotBlank(" ")); // false
+        assert(StringUtil.isNotBlank("bob"));// true
+        assert(StringUtil.isNotBlank(" bob "));// true
+    }
+
 }
 
