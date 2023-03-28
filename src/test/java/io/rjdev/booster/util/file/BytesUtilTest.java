@@ -16,13 +16,9 @@ public class BytesUtilTest {
     @Test
     public void test_saveBytesToFile(){
 
-        try {
-            String fname = "src/main/resources/data/f1.txt";
-            BytesUtil.saveBytesToFile(fname, "Hello!".getBytes());
+        String fname = "src/main/resources/data/f1.txt";
+        assert(BytesUtil.saveBytesToFile(fname, "Hello!".getBytes()));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
