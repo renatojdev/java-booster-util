@@ -56,7 +56,6 @@ default_bucket_name=DEFAULT S3 BUCKET NAME
 ```
 
 ---
-
 # S3
 
 ```java
@@ -74,6 +73,7 @@ awsu.downloadFromS3(bucket_name, "file-test.txt", "src/main/resources/data/file-
 // delete object
 awsu.deleteObjectS3(bucket_name, "file-test.txt");
 ```
+---
 
 # File - Saving bytes
 
