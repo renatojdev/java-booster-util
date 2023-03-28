@@ -90,12 +90,7 @@ public class FileUtil {
 		public Boolean fileSave(byte[] bytes){
 			if(!hasFile())
 				return Boolean.FALSE;
-			try {
-				BytesUtil.saveBytesToFile(path+File.separator+fileNameString, bytes);
-			} catch (IOException e) {
-				return Boolean.FALSE;
-			}
-			return Boolean.TRUE;
+			return BytesUtil.saveBytesToFile(path+File.separator+fileNameString, bytes);
 		}
 
 		/**
