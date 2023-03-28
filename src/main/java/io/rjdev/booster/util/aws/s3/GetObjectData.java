@@ -67,7 +67,7 @@ public class GetObjectData {
     }
 
     // snippet-start:[s3.java2.getobjectdata.main]
-    public static void getObjectBytes (S3Client s3, String bucketName, String keyName, String path) {
+    public static boolean getObjectBytes (S3Client s3, String bucketName, String keyName, String path) {
 
         try {
             GetObjectRequest objectRequest = GetObjectRequest
@@ -85,13 +85,14 @@ public class GetObjectData {
             os.write(data);
             System.out.println("Successfully obtained bytes from an S3 object");
             os.close();
+            return true;
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println(ex.getMessage());
         } catch (S3Exception e) {
             System.err.println(e.awsErrorDetails().errorMessage());
-            System.exit(1);
         }
+        return false;
     }
     // snippet-end:[s3.java2.getobjectdata.main]
 }
