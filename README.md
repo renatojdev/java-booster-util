@@ -48,7 +48,7 @@ mvn clean install
 
 # AWS SDK
 
->Set credentials on file **env.properties** Eg:
+>Set aws s3 credentials on file **env.properties** Eg:
 ```
 access_key=IAM ACCESS KEY
 secret_access_key=IAM SECRET ACCESS KEY
