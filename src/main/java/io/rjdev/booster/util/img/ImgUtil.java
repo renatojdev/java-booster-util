@@ -200,16 +200,4 @@ public class ImgUtil {
 		}
 	}
 
-    private static BufferedImage convertToARGB(final BufferedImage srcImage) {
-        final BufferedImage newImage = new BufferedImage(
-			srcImage.getWidth(null),
-			srcImage.getHeight(null),
-			BufferedImage.TYPE_INT_ARGB
-		);
-        final Graphics bg = newImage.getGraphics();
-        bg.drawImage(srcImage, 0, 0, null);
-        bg.dispose();
-        return newImage;
-    }
-
 }
