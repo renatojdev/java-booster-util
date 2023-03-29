@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +22,11 @@ public class FileUtil {
 	private String path;
 	private String fileNameString;
 
-	public void FitUtil (String path){
+	public FileUtil(){
+
+	}
+
+	public FileUtil (String path){
 		this.path = path;
 	}
 
@@ -165,5 +172,12 @@ public class FileUtil {
 			}
 
 			return -1;
+		}
+
+		public Set<String> listNameFiles() {
+			return Stream.of(new File(path).listFiles())
+					.filter(file -> !file.isDirectory())
+					.map(File::getName)
+					.collect(Collectors.toSet());
 		}
     }
