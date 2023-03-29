@@ -15,8 +15,8 @@ import software.amazon.awssdk.transfer.s3.S3TransferManager;
 
 public class S3ClientFactory {
     public static final S3TransferManager transferManager = createCustomTm();
-    public static final S3TransferManager transferManagerWithDefaults = createDefaultTm();
-    public static final S3Client s3Client;
+    // public static final S3TransferManager transferManagerWithDefaults = createDefaultTm();
+    public static S3Client s3Client;
 
     private static S3TransferManager createCustomTm(){
         // snippet-start:[s3.tm.java2.s3clientfactory.create_custom_tm]
@@ -31,11 +31,9 @@ public class S3ClientFactory {
         return transferManager;
     }
 
-    private static S3TransferManager createDefaultTm(){
-        // snippet-start:[s3.tm.java2.s3clientfactory.create_default_tm]
-        S3TransferManager transferManager = S3TransferManager.create();
-        // snippet-end:[s3.tm.java2.s3clientfactory.create_default_tm]
-        return transferManager;
+    public static void setCustomTmCredentials(String access_key, String secret_access_key){
+        S3FireClient.getInstance().credentials(access_key, secret_access_key);
+        s3Client = S3FireClient.getInstance().buildClient(null);
     }
 
     static {

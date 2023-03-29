@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.rjdev.booster.util.aws.s3.S3ClientFactory;
+import io.rjdev.booster.util.string.StringUtil;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.transfer.s3.model.CompletedDirectoryUpload;
@@ -32,7 +33,7 @@ import java.util.UUID;
  * https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/get-started.html
  */
 
-public class UploadADirectory {
+ public class UploadADirectory {
     private static final Logger logger = LoggerFactory.getLogger(UploadADirectory.class);
     public final String bucketName = "x-" + UUID.randomUUID();
     public String sourceDirectory;
@@ -41,12 +42,22 @@ public class UploadADirectory {
         setUp();
     }
 
-    public static void main(String[] args) {
-        UploadADirectory upload = new UploadADirectory();
+    public UploadADirectory(String access_key, String secret_access_key) {
+        S3ClientFactory.setCustomTmCredentials(access_key, secret_access_key);
+        setUp();
+    }
 
-        Integer numFailedUploads = upload.uploadDirectory(S3ClientFactory.transferManager, upload.sourceDirectory, upload.bucketName);
+    public Integer upload(String sourceDirectory){
+        if(StringUtil.isNotBlank(sourceDirectory))
+            this.sourceDirectory = sourceDirectory;
+        return upload();
+    }
+
+    public Integer upload() {
+        Integer numFailedUploads = uploadDirectory(S3ClientFactory.transferManager, sourceDirectory, bucketName);
         logger.info("Number of failed transfers [{}].", numFailedUploads);
-        upload.cleanUp();
+        cleanUp();
+        return numFailedUploads;
     }
 
     // snippet-start:[s3.tm.java2.uploadadirectory.main]
@@ -67,18 +78,18 @@ public class UploadADirectory {
 
     private void setUp(){
         S3ClientFactory.s3Client.createBucket(b -> b.bucket(bucketName));
-        URL dirResource = UploadADirectory.class.getClassLoader().getResource("uploadDirectory");
+        URL dirResource = UploadADirectory.class.getClassLoader().getResource("data");
         sourceDirectory = dirResource.getPath();
     }
 
     public void cleanUp(){
+        System.out.println("cleanUP: "+ bucketName);
         S3ClientFactory.s3Client.deleteObjects(b -> b
             .bucket(bucketName)
             .delete(b1 -> b1
                 .objects(
-                    ObjectIdentifier.builder().key("file1.txt").build(),
-                    ObjectIdentifier.builder().key("file2.txt").build(),
-                    ObjectIdentifier.builder().key("file3.txt").build()
+                    ObjectIdentifier.builder().key("f1.txt").build(),
+                    ObjectIdentifier.builder().key("file-test-s3.txt").build()
                 )));
         S3ClientFactory.s3Client.deleteBucket(b -> b.bucket(bucketName));
     }
