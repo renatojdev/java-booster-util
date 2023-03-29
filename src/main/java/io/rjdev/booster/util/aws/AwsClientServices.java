@@ -24,9 +24,8 @@ public abstract class AwsClientServices<T,S> {
     protected AwsBasicCredentials credentials(){
         if(!StringUtil.isNotBlank(access_key) &&
             !StringUtil.isNotBlank(secret_access_key)){
-                Resource resource = Resource.getInstance();
-                access_key = resource.get(ACCESS_KEY);
-                secret_access_key = resource.get(SECRET_ACCESS_KEY);
+                access_key = Resource.get(ACCESS_KEY);
+                secret_access_key = Resource.get(SECRET_ACCESS_KEY);
         }
 
         if(access_key==null || secret_access_key==null)

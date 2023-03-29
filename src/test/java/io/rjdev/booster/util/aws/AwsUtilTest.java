@@ -24,10 +24,9 @@ public class AwsUtilTest {
     @BeforeAll
     public static void start() {
         System.out.println("=======Starting junit 5 tests========");
-        Resource resource = Resource.getInstance();
-        access_key = resource.get("access_key");
-        secret_access_key = resource.get("secret_access_key");
-        bucket_name = resource.get("default_bucket_name");
+        access_key = Resource.get("access_key");
+        secret_access_key = Resource.get("secret_access_key");
+        bucket_name = Resource.get("default_bucket_name");
     }
 
     @BeforeEach

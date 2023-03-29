@@ -50,7 +50,7 @@ public class AwsUtil {
     }
 
     private void getDefaults(){
-        defaultBucketName = Resource.getInstance().get("default_bucket_name");
+        defaultBucketName = Resource.get("default_bucket_name");
     }
 
     private String getBucketName(String bucketName){
