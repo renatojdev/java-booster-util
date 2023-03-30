@@ -24,12 +24,29 @@ import io.rjdev.booster.util.string.Token;
  */
 public class HttpUtil {
 
+	private static HttpUtil instance = null;
 	private HttpURLConnection con;
+	public static HttpMethod method = HttpMethod.GET;
+	private int responseCode;
 
-	public static Method method = Method.GET;
+	/*
+	 * Singleton.
+	 */
+	public static HttpUtil getInstance() {
+		if(instance == null)
+			instance = new HttpUtil();
+		return instance;
+	}
 
-	public HttpUtil(String url, Method method) {
+	public int getResponseCode() {
+		return responseCode;
+	}
 
+	public HttpUtil open(String url){
+		return open(url, method);
+	}
+
+	public HttpUtil open(String url, HttpMethod method) {
 		URL u;
 		try {
 			u = new URL(url);
@@ -39,6 +56,15 @@ public class HttpUtil {
 			e.printStackTrace();
 		}
 
+		return this;
+	}
+
+	public void addHeaders(Map<String,String> headers){
+		if(headers == null || headers.isEmpty())
+			return;
+		headers.entrySet().forEach(e ->
+			con.setRequestProperty(e.getKey(), e.getValue()));
+		;
 	}
 
 	/**
@@ -53,21 +79,18 @@ public class HttpUtil {
 
 		// Add cookie to request
 		String cookie = cookieName+"="+cookieValue;
-		// con.addRequestProperty("Cookie", cookie);
-		con.setRequestProperty("Cookie", cookie);
+		con.addRequestProperty("Cookie", cookie);
 		CookieManager cookieManager = new CookieManager();
 		cookieManager.getCookieStore().add(URI.create(cookiePath), HttpCookie.parse(cookie).get(0));
 		cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 		CookieHandler.setDefault(cookieManager);
-
 	}
 
 	public String getResponse() {
-
 		StringBuffer content = new StringBuffer();
 		try {
-			int status = con.getResponseCode();
-			if(status == 200){
+			responseCode = con.getResponseCode();
+			if(responseCode == HttpURLConnection.HTTP_OK){
 				BufferedReader in;
 				in = new BufferedReader(
 					new InputStreamReader(con.getInputStream()));
@@ -84,12 +107,12 @@ public class HttpUtil {
 		}
 		System.out.println("Response body: "+ content.toString());
 		return content.toString();
-
 	}
 
 	public Map<String, String> getResponseCookies(){
 		Map<String, String> cookies = new HashMap<>();
 		Map<String, List<String>> headerFields = con.getHeaderFields();
+		System.out.println(headerFields);
 		List<String> cookiesHeader = headerFields.get("Set-Cookie");
 		if (cookiesHeader != null) {
 			for (String cookie : cookiesHeader) {
@@ -100,7 +123,7 @@ public class HttpUtil {
 		return cookies;
 	}
 
-	public enum Method {
+	public enum HttpMethod {
 		GET,
 		POST,
 		PUT,
