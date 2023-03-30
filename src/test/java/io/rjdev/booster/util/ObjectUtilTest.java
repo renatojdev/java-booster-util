@@ -16,6 +16,7 @@ public class ObjectUtilTest {
     @Test
     public void test_isEqual_notEqual(){
         assertTrue( ObjectUtil.isEquals(String.valueOf("a"), new String("a") ));
+        assertTrue( ObjectUtil.isEquals("", new String("") ));
         assertFalse( ObjectUtil.isEquals(String.valueOf("a"), new String("") ));
         assertTrue( ObjectUtil.notEqual(String.valueOf("a"), new String("") ));
         assertFalse( ObjectUtil.notEqual(String.valueOf("a"), new String("a") ));
