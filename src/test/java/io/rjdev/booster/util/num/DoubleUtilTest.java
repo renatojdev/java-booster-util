@@ -14,11 +14,11 @@ public class DoubleUtilTest {
     @Test
     public void test_doubleToString(){
 
-        assert("110,58".equals(DoubleUtil.doubleToString(new Double(110.5789))));
-        assert("11,10".equals(DoubleUtil.doubleToString(new Double(11.1))));
-        assert("2340,00".equals(DoubleUtil.doubleToString(new Double(2340))));
-        assert("123,40".equals(DoubleUtil.doubleToString(new Double(123.40))));
-        assert("120530,40".equals(DoubleUtil.doubleToString(new Double(120530.40))));
+        assert("110,58".equals(DoubleUtil.doubleToString(Double.valueOf(110.5789))));
+        assert("11,10".equals(DoubleUtil.doubleToString(Double.valueOf(11.1))));
+        assert("2340,00".equals(DoubleUtil.doubleToString(Double.valueOf(2340))));
+        assert("123,40".equals(DoubleUtil.doubleToString(Double.valueOf(123.40))));
+        assert("120530,40".equals(DoubleUtil.doubleToString(Double.valueOf(120530.40))));
     }
 
     @Test

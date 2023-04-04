@@ -96,7 +96,7 @@ public class StringUtil {
 			return qt;
 
 		for (int i = 0; i < string.length(); i++) {
-			if (new Character(string.charAt(i)).toString().matches("[a-zA-Z]"))
+			if (Character.valueOf(string.charAt(i)).toString().matches("[a-zA-Z]"))
 				qt++;
 		}
 

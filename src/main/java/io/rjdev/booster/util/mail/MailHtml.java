@@ -92,7 +92,7 @@ public class MailHtml {
         }
     }
 
-    private String getExtenstion(String pathname){
+    public String getExtenstion(String pathname){
         File file = new File(pathname);
         String filename = file.getName();
         int lastDotIndex = filename.lastIndexOf(".");
@@ -114,7 +114,7 @@ public class MailHtml {
 
     }
 
-    private String getContentType(String filename) {
+    public String getContentType(String filename) {
         if (filename.endsWith(".pdf")) {
             return "application/pdf";
         } else if (filename.endsWith(".jpg") ||
