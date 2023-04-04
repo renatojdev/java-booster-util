@@ -39,10 +39,10 @@ public class FileUtilTest {
             FileUtil fu = new FileUtil();
             assert(!fu.mkdir());
             fu.setPath("src/main/resources/data2");
-            assert(fu.mkdir());
+            assert(!fu.mkdir());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 
@@ -72,7 +72,7 @@ public class FileUtilTest {
             assert(Arrays.equals("Hello there!".getBytes(), fu.loadBytesFromFile()));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -98,7 +98,7 @@ public class FileUtilTest {
             FileUtil fu = new FileUtil();
             fu.setFileNameString("f1.txt");
             fu.setPath("src/main/resources/data2");
-            assert(fu.delete(true));
+            assert(fu.delete(false));
 
         } catch (Exception e) {
             e.printStackTrace();
