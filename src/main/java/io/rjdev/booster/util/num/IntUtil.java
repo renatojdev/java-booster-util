@@ -1,6 +1,8 @@
 
 package io.rjdev.booster.util.num;
 
+import java.util.Random;
+
 public class IntUtil {
 
     /**
@@ -11,9 +13,10 @@ public class IntUtil {
      * @return the randomly generated integer
      */
     public static int randomNumber(byte lenght) {
+      Random random = new Random();
         int limitedSize = Math.min(9, Math.max(1, lenght));
         String maxString = String.format("%0" + limitedSize + "d", 0).replace("0", "9");
-        return Integer.parseInt(maxString);
+        return random.nextInt(Integer.parseInt(maxString) - 1000*lenght) + 1;
       }
 
 }
