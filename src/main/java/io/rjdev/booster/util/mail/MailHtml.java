@@ -4,6 +4,7 @@ package io.rjdev.booster.util.mail;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import org.apache.commons.mail.HtmlEmail;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 
 import javax.activation.FileDataSource;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 @Getter @Setter
 public class MailHtml {
@@ -30,6 +32,9 @@ public class MailHtml {
     private String urlEmailServidor;
     private HashMap<String, String> imagemEmbed;
     private String attachment;
+    private String attachName;
+    private String attachContentType;
+    private ByteArrayInputStream attachStream;
 
 
     public static void main(String[] args) {
@@ -81,8 +86,14 @@ public class MailHtml {
                 // Adicionar o anexo com tipo MIME ao email
                 MimeMultipart mimeMultipart = new MimeMultipart(fileDataSource);
                 email.setContent(mimeMultipart);
-                email.attach(fileDataSource, getFileName(this.attachment), "Anexo");
+                email.attach(fileDataSource, getFileName(this.attachment), attachName);
             }
+            // attach as stream
+            if (attachStream != null && attachStream instanceof ByteArrayInputStream) {
+                // adicionar anexo com stream
+                email.attach(new ByteArrayDataSource(attachStream, attachContentType), attachName, null);
+            }
+            // send
             email.send();
         }
         catch (EmailException ee) {
