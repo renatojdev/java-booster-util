@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -184,4 +187,61 @@ public class DateUtil {
 		int days = Days.daysBetween(dateStart , dateEnd).getDays();
 		return days;
 	}
+
+
+	/**
+	 * Previous month from date.
+	 *
+	 * @param date Java LocalDate
+	 * @return the previous month from date.
+	 */
+    public static Month getPreviousMonth(java.time.LocalDate date) {
+        Month currentMonth = date.getMonth();
+    	if (currentMonth == Month.JANUARY)
+			return Month.DECEMBER;
+    	else return currentMonth.minus(1);
+	}
+
+	/**
+	 * First day of previous month from date.
+	 *
+	 * @param date Java LocalDate
+	 * @return the first day of previous month from date.
+	 */
+	public static java.time.LocalDate getFirstDayOfPreviousMonth(java.time.LocalDate date) {
+		Month previousMonth = getPreviousMonth(date);
+		int previousYear = (previousMonth == Month.DECEMBER) ?  date.getYear() - 1 : date.getYear();
+		return java.time.LocalDate.of(previousYear, previousMonth, 1);
+	}
+
+	/**
+	 * Formatted Previous month from date Eg: Jan/2021.
+	 *
+	 * @param date Java LocalDate
+	 * @param locale java Locale
+	 * @return the formatted Previous month from date.
+	 */
+	public static String getPreviousMonthFormatted(java.time.LocalDate date, Locale locale){
+		if (locale == null) {
+			locale = new Locale("pt", "BR");
+		}
+		java.time.LocalDate previousMonth = date.minusMonths(1);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/yyyy", locale);
+		String formattedDate = previousMonth.format(formatter);
+		System.out.println(formattedDate);
+		return formattedDate;
+	}
+
+	/**
+	 * Method overload of getPreviousMonthFormatted
+	 * Formatted Previous month from date Eg: Jan/2021.
+	 *
+	 * @param date Java LocalDate
+	 * @return the formatted Previous month from date.
+	 * @see #getPreviousMonthFormatted(java.time.LocalDate date, Locale locale)
+	 */
+	public static String getPreviousMonthFormatted(java.time.LocalDate date){
+		return getPreviousMonthFormatted(date, null);
+	}
+
 }
