@@ -1,7 +1,6 @@
 package io.rjdev.booster.util.http;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -34,11 +33,26 @@ public class Get {
         try{
             addParameters();
             System.out.println(endpoint);
-            URL url = new URL(endpoint);
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
+            URL obj = new URL(endpoint);
+            this.con = (HttpURLConnection) obj.openConnection();
+            configureConnectionDefaults();
+            addHeaders();
+
         }catch(IOException ioe){
             System.err.println(ioe.getMessage());
+        }
+    }
+
+    private void configureConnectionDefaults(){
+        if(this.con != null){
+            try {
+                this.con.setRequestMethod("GET");
+                this.con.setConnectTimeout(5000);
+                this.con.setReadTimeout(5000);
+                System.out.println("defaults configured..");
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
@@ -46,7 +60,8 @@ public class Get {
 
         try {
             // ADD PARAMETERS
-            endpoint = endpoint + "?" + ParameterStringBuilder.getParamsString(parameters);
+            if(parameters!=null)
+                endpoint = endpoint + "?" + ParameterStringBuilder.getParamsString(parameters);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace(System.out);
@@ -54,44 +69,36 @@ public class Get {
     }
 
     public Get execute() throws Exception{
-
         createConnection();
-        addHeaders();
 
-        con.setConnectTimeout(5000);
-        con.setReadTimeout(5000);
-
-        con.setInstanceFollowRedirects(false);
+        this.con.setInstanceFollowRedirects(false);
         HttpURLConnection.setFollowRedirects(false);
 
-        con.setDoOutput(true);
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-        out.flush();
-        out.close();
-
-        status = con.getResponseCode();
-        System.out.println("GET Response Code :: " + status);
+        status = this.con.getResponseCode();
+        System.out.println("GET status code:::"+ status);
 
         if (status == HttpURLConnection.HTTP_MOVED_TEMP
-            || status == HttpURLConnection.HTTP_MOVED_PERM) {
-                String location = con.getHeaderField("Location");
+            || status == HttpURLConnection.HTTP_MOVED_PERM) {// 301 | 302
+                String location = this.con.getHeaderField("Location");
+
                 URL newUrl = new URL(location);
-                con = (HttpURLConnection) newUrl.openConnection();
+                this.con = (HttpURLConnection) newUrl.openConnection();
+                configureConnectionDefaults();
         }
 
-        if (status == HttpURLConnection.HTTP_OK) { //success
-            BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        if (status == HttpURLConnection.HTTP_OK) { //200 - success
+            System.out.println("Reading response...");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuffer content = new StringBuffer();
+
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
             }
             in.close();
-            con.disconnect();
 
             // print result
-            System.out.println(content.toString());
             this.response = content.toString();
 
             return this;
@@ -104,21 +111,19 @@ public class Get {
     }
 
     private void addHeaders() {
-
-        if(con == null)
+        if(this.con == null){
             return;
+        }
 
         // add request default headers
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        this.con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        this.con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
         if(headers!=null)
             headers.entrySet().stream()
             .forEach(e -> {
-                System.out.println("ADD HEADER: "+ e.getKey() + ":" + e.getValue());
-                con.setRequestProperty(e.getKey(), e.getValue());
+                this.con.setRequestProperty(e.getKey(), e.getValue());
             });
-
     }
 
 }

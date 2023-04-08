@@ -1,8 +1,10 @@
 package io.rjdev.booster.util.http;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -28,6 +30,8 @@ public class HttpUtil {
 	private HttpURLConnection con;
 	public static HttpMethod method = HttpMethod.GET;
 	private int responseCode;
+	private Map<String,String> parameters;
+	private String body;
 
 	/*
 	 * Singleton.
@@ -46,9 +50,14 @@ public class HttpUtil {
 		return open(url, method);
 	}
 
+	public void setBody(String body){
+		this.body = body;
+	}
+
 	public HttpUtil open(String url, HttpMethod method) {
 		URL u;
 		try {
+			url = addParameters(url);
 			u = new URL(url);
 			con = (HttpURLConnection) u.openConnection();
 			con.setRequestMethod(method.toString());
@@ -58,6 +67,20 @@ public class HttpUtil {
 
 		return this;
 	}
+
+	private String addParameters(String endpoint) {
+
+        try {
+            // ADD PARAMETERS
+            if(parameters!=null)
+                endpoint = endpoint + "?" + ParameterStringBuilder.getParamsString(parameters);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(System.out);
+        }
+
+		return endpoint;
+    }
 
 	public void addHeaders(Map<String,String> headers){
 		if(headers == null || headers.isEmpty())
@@ -88,7 +111,20 @@ public class HttpUtil {
 
 	public String getResponse() {
 		StringBuffer content = new StringBuffer();
+
 		try {
+			// For POST | PUT only - START
+			if((method.toString().equals("POST") ||
+				method.toString().equals("PUT")) &&
+				body != null){
+					con.setDoOutput(true);
+					DataOutputStream os = new DataOutputStream(con.getOutputStream());
+					os.writeBytes(body);
+					os.flush();
+					os.close();
+			}
+			// For POST | PUT only - END
+
 			responseCode = con.getResponseCode();
 			if(responseCode == HttpURLConnection.HTTP_OK){
 				BufferedReader in;

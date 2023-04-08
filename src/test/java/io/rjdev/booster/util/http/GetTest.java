@@ -32,7 +32,7 @@ public class GetTest {
             Get get = Get.builder()
             .endpoint(url)
             .headers(headers)
-            .parameters(parameters)
+            // .parameters(parameters)
             .build()
             .execute();
 
@@ -45,5 +45,9 @@ public class GetTest {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public void main(String[] args){
+        executeTest();
     }
 }

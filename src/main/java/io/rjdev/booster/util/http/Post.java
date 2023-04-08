@@ -34,18 +34,32 @@ public class Post {
         try{
             URL url = new URL(endpoint);
             con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
+            configureConnectionDefaults();
+
+            if(this.con == null)
+                addHeaders();
+
         }catch(IOException ioe){
             System.err.println(ioe.getMessage());
         }
     }
 
+    private void configureConnectionDefaults(){
+        if(this.con != null){
+            try {
+                this.con.setRequestMethod("POST");
+                this.con.setConnectTimeout(5000);
+                this.con.setReadTimeout(5000);
+
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
     public Post execute() throws Exception{
-
         createConnection();
-        addHeaders();
 
-        System.out.println("body: "+ body);
         // For POST only - START
         con.setDoOutput(true);
         DataOutputStream os = new DataOutputStream(con.getOutputStream());
@@ -55,7 +69,7 @@ public class Post {
         // For POST only - END
 
         responseCode = con.getResponseCode();
-        System.out.println("POST Response Code :: " + responseCode);
+        System.out.println("POST Response Code:::" + responseCode);
 
         if (responseCode == HttpURLConnection.HTTP_OK) { //success
             BufferedReader in = new BufferedReader(new InputStreamReader(
