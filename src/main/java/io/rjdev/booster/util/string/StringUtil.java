@@ -1,5 +1,8 @@
 package io.rjdev.booster.util.string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StringUtil {
 
     public static String removeCharFromString(char c, String str) {
@@ -254,5 +257,44 @@ public class StringUtil {
 
 		return true;
 	}
+
+	/**
+	 * Replaces special characters in a string with their
+	 * respective HTML entities. Supported special characters are:
+	 * á, é, í, ó, ú, à, è, ì, ò, ù, â, ê, î, ô, û, ã, õ, ñ, ç.
+	 *
+	 * @param s A string in which to replace special characters.
+	 * @return The resulting string after character substitution
+	 * special by their respective HTML entities.
+	 */
+	public static String replaceSpecialChars(String s) {
+		Map<String, String> specialChars = new HashMap<>();
+		specialChars.put("á", "&aacute;");
+		specialChars.put("é", "&eacute;");
+		specialChars.put("í", "&iacute;");
+		specialChars.put("ó", "&oacute;");
+		specialChars.put("ú", "&uacute;");
+		specialChars.put("à", "&agrave;");
+		specialChars.put("è", "&egrave;");
+		specialChars.put("ì", "&igrave;");
+		specialChars.put("ò", "&ograve;");
+		specialChars.put("ù", "&ugrave;");
+		specialChars.put("â", "&acirc;");
+		specialChars.put("ê", "&ecirc;");
+		specialChars.put("î", "&icirc;");
+		specialChars.put("ô", "&ocirc;");
+		specialChars.put("û", "&ucirc;");
+		specialChars.put("ã", "&atilde;");
+		specialChars.put("õ", "&otilde;");
+		specialChars.put("ñ", "&ntilde;");
+		specialChars.put("ç", "&ccedil;");
+
+		for (Map.Entry<String, String> entry : specialChars.entrySet()) {
+			s = s.replace(entry.getKey(), entry.getValue());
+		}
+
+		return s;
+	}
+
 
 }
