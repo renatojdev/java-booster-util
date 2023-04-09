@@ -33,10 +33,11 @@ public class Post {
     private void createConnection(){
         try{
             URL url = new URL(endpoint);
-            con = (HttpURLConnection) url.openConnection();
+            System.out.println("Post to endpoint: "+ endpoint);
+            this.con = (HttpURLConnection) url.openConnection();
             configureConnectionDefaults();
 
-            if(this.con == null)
+            if(this.con != null)
                 addHeaders();
 
         }catch(IOException ioe){
@@ -71,7 +72,8 @@ public class Post {
         responseCode = con.getResponseCode();
         System.out.println("POST Response Code:::" + responseCode);
 
-        if (responseCode == HttpURLConnection.HTTP_OK) { //success
+        if (responseCode >= HttpURLConnection.HTTP_OK &&
+            responseCode <= HttpURLConnection.HTTP_PARTIAL) { //success
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
@@ -82,7 +84,6 @@ public class Post {
             } in .close();
 
             // print result
-            System.out.println(response.toString());
             this.response = response.toString();
 
             return this;
@@ -96,19 +97,19 @@ public class Post {
 
     private void addHeaders() {
 
-        if(con == null)
+        if(this.con == null)
             return;
 
         // add request default headers
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        this.con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        this.con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-        if(headers!=null)
-            headers.entrySet().stream()
-            .forEach(e -> {
-                System.out.println("ADD HEADER: "+ e.getKey() + ":" + e.getValue());
-                con.setRequestProperty(e.getKey(), e.getValue());
-            });
+        if(this.headers!=null)
+            this.headers.entrySet().stream()
+                .forEach(e -> {
+                    System.out.println("ADD HEADER: "+ e.getKey() + ":" + e.getValue());
+                    this.con.setRequestProperty(e.getKey(), e.getValue());
+                });
 
     }
 
