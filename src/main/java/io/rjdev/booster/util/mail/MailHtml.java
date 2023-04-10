@@ -54,7 +54,7 @@ public class MailHtml {
         }
     }
 
-    public void sendHtml() throws Exception {
+    public String sendHtml() throws Exception {
         final HtmlEmail email = new HtmlEmail();
         try {
             email.setHostName(this.mailHost);
@@ -94,7 +94,7 @@ public class MailHtml {
                 email.attach(new ByteArrayDataSource(attachStream, attachContentType), attachName, null);
             }
             // send
-            email.send();
+            return email.send();
         }
         catch (EmailException ee) {
             ee.printStackTrace(System.out);
