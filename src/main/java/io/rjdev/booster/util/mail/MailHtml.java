@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
 import javax.activation.FileDataSource;
 import javax.mail.internet.MimeMultipart;
