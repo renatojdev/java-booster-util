@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 
 import javax.activation.FileDataSource;
 import javax.mail.internet.MimeMultipart;
@@ -102,6 +103,26 @@ public class MailHtml {
             throw new Exception((Throwable)ee);
         }
     }
+
+    public void sendHtmlAsync() throws Exception {
+        // CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+        Thread sendEmailThread = new Thread(() -> {
+            try {
+                sendHtml();
+            } catch (EmailException e) {
+                System.err.println(e.getMessage());
+                Thread.currentThread().interrupt(); // interrompe a thread em caso de exceção
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+                Thread.currentThread().interrupt(); // interrompe a thread em caso de exceção
+            }
+        });
+        sendEmailThread.start();
+        // future.get(); // espera a entrega dentro da thread
+    }
+
+
+
 
     public String getExtenstion(String pathname){
         File file = new File(pathname);

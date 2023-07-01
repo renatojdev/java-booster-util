@@ -4,7 +4,7 @@
   <groupId>io.rjdev.booster</groupId>
   <artifactId>booster-util</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
   <name>java-booster-util</name>
   <url>http://maven.apache.org</url>
   <properties>
