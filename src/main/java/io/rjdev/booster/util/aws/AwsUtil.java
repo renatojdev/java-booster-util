@@ -20,6 +20,7 @@ public class AwsUtil {
     private String defaultBucketName;
     private S3Client s3;
     Region region;
+    public static final Region Region_US_WEST_2 = Region.US_WEST_2;
 
     /**
      * Default Constructor. Set the s3 client.
@@ -27,6 +28,17 @@ public class AwsUtil {
      * @return AwsUtil instance.
      */
     public AwsUtil awsClient(){
+        getDefaults();
+        s3 = S3FireClient.getInstance().buildClient(region);
+        return this;
+    }
+
+     /**
+     * Constructor with region.
+     *
+     * @return AwsUtil instance
+     */
+    public AwsUtil awsClient(Region region){
         getDefaults();
         s3 = S3FireClient.getInstance().buildClient(region);
         return this;
@@ -123,13 +135,13 @@ public class AwsUtil {
      * @param bucket_name The Amazon S3 bucket to delete the website configuration from.
      * @param objectName The object name.
      */
-    public boolean deleteObjectS3(String bucket_name, String objectName) {
+    public boolean deleteObjectS3(String bucket_name, String objectKey) {
         bucket_name = getBucketName(bucket_name);
-        if(bucket_name == null || !StringUtil.isNotBlank(objectName))
+        if(bucket_name == null || !StringUtil.isNotBlank(objectKey))
             return false;
 
-        System.out.println("Deleting "+objectName +" from the Amazon S3 bucket: " + bucket_name);
-        return DeleteObjects.deleteBucketObjects(s3, bucket_name, objectName);
+        System.out.println("Deleting "+objectKey +" from the Amazon S3 bucket: " + bucket_name);
+        return DeleteObjects.deleteBucketObjects(s3, bucket_name, objectKey);
     }
 
 }
